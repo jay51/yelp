@@ -3,6 +3,7 @@
 <div class="container">
 	<form action="/campgrounds" method="post">
 	  <div class="form-group">
+<<<<<<< HEAD
 	    <label for="name">Campground name</label>
 	    <input type="text" class="form-control" name="name" id="name"  placeholder="Enter name">
 	    <small  class="form-text text-muted">Share your campgrounds with US.</small>
@@ -23,4 +24,22 @@
 
 </div>
 
+=======
+	    <label for="name">Email address</label>
+	    <input type="text" class="form-control" name="name" id="name"  placeholder="Enter name">
+	    <small  class="form-text text-muted">We'll never share your email with anyone else.</small>
+	  </div>
+	  <div class="form-group">
+	    <label for="image">Image URL</label>
+	    <input type="text" class="form-control" name="image" id="url" placeholder="Image url">
+	  </div>
+	  <div class="form-check">
+	    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+		<input type="checkbox" class="form-check-input" id="exampleCheck1">
+	  </div>
+	  <button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
+<a href="/campgrounds">campgrounds</a>
+>>>>>>> 9590a5b67e7b538ad94a2cc68a094f8e8315c73e
 <% include ./partials/footer %>

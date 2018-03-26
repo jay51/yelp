@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express	= require("express"),
 	bodyParser	= require("body-parser"),
 	mongoose	= require("mongoose"),
@@ -5,10 +6,16 @@ const express	= require("express"),
 	
 
 mongoose.connect("mongodb://localhost/yelp_camp");
+=======
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser")
+>>>>>>> 9590a5b67e7b538ad94a2cc68a094f8e8315c73e
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 
+<<<<<<< HEAD
 // DB schema
 const campgroundsSchema = mongoose.Schema({
 	name:String,
@@ -38,12 +45,31 @@ app.get("/campgrounds", function(req, res){
 		if(err) return err ;
 		res.render("index", {campgrounds});
 	});
+=======
+let campgrounds = [
+	{name:"some place", image:"./images/firecamp.jpg"},
+	{name:"some place", image:"./images/night.jpg"},
+	{name:"some place", image:"./images/camping.jpg"},
+	{name:"some place", image:"./images/firecamp.jpg"},
+	{name:"some place", image:"./images/night.jpg"},
+	{name:"some place", image:"./images/firecamp.jpg"},
+	{name:"some place", image:"./images/night.jpg"}
+]
+
+app.get("/", function(req, res){
+	res.render("index");
+});
+
+app.get("/campgrounds", function(req, res){
+	res.render("campgrounds", {campgrounds});
+>>>>>>> 9590a5b67e7b538ad94a2cc68a094f8e8315c73e
 });
 
 app.post("/campgrounds", function(req, res){
 	//get data from form and add to campgrounds arrey
 	let name = req.body.name;
 	let image = req.body.image;
+<<<<<<< HEAD
 	let desc = req.body.descreption;
 	// add campground to DB
 	Campground.create({
@@ -53,6 +79,11 @@ app.post("/campgrounds", function(req, res){
 	
 	//redirect back to campgrounds page
 	res.redirect("/index");
+=======
+	campgrounds.push({name, image});
+	//redirect back to campgrounds page
+	res.redirect("/campgrounds");
+>>>>>>> 9590a5b67e7b538ad94a2cc68a094f8e8315c73e
 });
 
 
@@ -61,6 +92,7 @@ app.get("/campgrounds/new", function(req, res){
 });
 
 
+<<<<<<< HEAD
 app.get("/campgrounds/:id", function(req, res){
 	let campgroundId = req.params.id; 
 	Campground.findById(campgroundId, (err, foundCampground) =>{
@@ -71,6 +103,8 @@ app.get("/campgrounds/:id", function(req, res){
 });
 
 
+=======
+>>>>>>> 9590a5b67e7b538ad94a2cc68a094f8e8315c73e
 const port = process.env.PORT || 3000;
 app.listen(port, () =>{
 	console.log("the server has started");
