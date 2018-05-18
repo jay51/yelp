@@ -8,6 +8,16 @@
     <div> <%= foundCampground.description %> </div>
 </div>
 
+<div>
+    <% foundCampground.comments.forEach( ( comment ) => { %>
+        <p> 
+        <strong><%= comment.author %></strong> - <%= comment.text %>
+        </p>
+    
+    <% });%>
+    
+</div>
+
 
 
 
