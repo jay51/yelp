@@ -1,3 +1,36 @@
 add user authntication.
 Add map to show campground location
 add comments to show route 
+
+
+
+
+RESTFUL ROUTES
+
+NAME        URL         VERB         DISC.
+============================================
+
+INDEX       /dogs       GET         DISPLAY ALL DOGS
+
+NEW         /dogs/new   GET         DISPLAY FORM FOR NEW DOGS
+
+CREATE      /dogs       POST        ADD DOG TO DB
+
+SHOW        /dogs       GET         SHOW INFO ABOUT ONE DOG
+
+
+=============================================================
+    CAMPGROUNDS
+    
+INDEX       /campgrounds        GET
+NEW         /campgrounds/new    GET
+CREATE      /campgrounds        POST
+SHOW        /campground/:id     GET
+=====================================
+
+    COMMENTS
+    
+NEW         /campgrounds/:id/comments/new   GET
+CREATE      /campgrounds/:id/comments               POST
+
+

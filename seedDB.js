@@ -24,8 +24,8 @@ const data = [
 
 // make comment and push it to the campground passed
 const makeComment = campground => Comment.create({
+    author: "jay",
     text: "this place is awesome but i wish there was internet in here!",
-    author: "jay"
 }, (err, newComment) => {
 
     err ? console.log(err) : console.log("new comment created");

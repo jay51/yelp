@@ -3,6 +3,7 @@ const express = require("express"),
 	mongoose = require("mongoose"),
 	app = express(),
 	Campground = require("./modules/campgrounds"),
+	Comment = require("./modules/comments"),
 	seedDB = require("./seedDB");
 
 
@@ -25,9 +26,15 @@ app.get("/campgrounds", function(req, res) {
 	// find campgrounds from DB
 	Campground.find({}, (err, campgrounds) => {
 		if (err) return err;
-		res.render("index", { campgrounds });
+		res.render("campgrounds/index", { campgrounds });
 	});
 });
+
+// get the form for new campground
+app.get("/campgrounds/new", function(req, res) {
+	res.render("campgrounds/new");
+});
+
 
 // post route that create new campground and redirect to index page
 app.post("/campgrounds", function(req, res) {
@@ -37,17 +44,12 @@ app.post("/campgrounds", function(req, res) {
 	let desc = req.body.descreption;
 	// add campground to DB
 	Campground.create({
-		name: name,
-		image: image
+		name,
+		image
 	}, (err, camp) => console.log(err ? err : camp));
 
 	//redirect back to index page
 	res.redirect("/campgrounds");
-});
-
-// get the form for new campground
-app.get("/campgrounds/new", function(req, res) {
-	res.render("new");
 });
 
 
@@ -58,9 +60,39 @@ app.get("/campgrounds/:id", function(req, res) {
 		.exec((err, foundCampground) => {
 			if (err) return err;
 			console.log(foundCampground);
-			res.render("show", { foundCampground });
+			res.render("campgrounds/show", { foundCampground });
 		});
 });
+
+
+
+// =====================
+// COMMENTS ROUTES
+// =====================
+
+
+app.get("/campgrounds/:id/comments/new", function(req, res) {
+	Campground.findById(req.params.id, (err, campground) => {
+		if (err) return err
+		res.render("comments/new", { campground });
+	});
+});
+
+
+app.post("/campgrounds/:id/comments", function(req, res) {
+	// find campground
+	Campground.findById(req.params.id, (err, campground) => {
+		if (err) return err; // need to handle err better
+		// add comment to DB
+		Comment.create(req.body.comments, (err, comment) => {
+			if (err) return err;
+			campground.comments.push(comment);
+			campground.save();
+			res.redirect(`/campgrounds/${req.params.id}`);
+		});
+	});
+});
+
 
 
 const port = process.env.PORT || 3000;
