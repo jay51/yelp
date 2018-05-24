@@ -9,7 +9,7 @@ const express = require("express"),
 
 mongoose.connect("mongodb://localhost/yelp_camp");
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // seedDB
@@ -41,7 +41,6 @@ app.post("/campgrounds", function(req, res) {
 	//get data from form and add to campgrounds DB
 	let name = req.body.name;
 	let image = req.body.image;
-	let desc = req.body.descreption;
 	// add campground to DB
 	Campground.create({
 		name,
@@ -73,7 +72,7 @@ app.get("/campgrounds/:id", function(req, res) {
 
 app.get("/campgrounds/:id/comments/new", function(req, res) {
 	Campground.findById(req.params.id, (err, campground) => {
-		if (err) return err
+		if (err) return err;
 		res.render("comments/new", { campground });
 	});
 });
