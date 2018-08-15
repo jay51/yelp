@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-// const Comment = require("./comments");
-
 
 // DB schema
 const campgroundsSchema = mongoose.Schema({
@@ -15,7 +13,7 @@ const campgroundsSchema = mongoose.Schema({
 	]
 });
 
-// DB model 
+// DB model
 module.exports = mongoose.model("campgrounds", campgroundsSchema);
 
 // // first campground

@@ -2,18 +2,34 @@ const express = require("express"),
 	bodyParser = require("body-parser"),
 	mongoose = require("mongoose"),
 	app = express(),
-	Campground = require("./modules/campgrounds"),
-	Comment = require("./modules/comments"),
-	seedDB = require("./seedDB");
+	Campground = require("./models/campgrounds"),
+	Comment = require("./models/comments"),
+	seedDB = require("./seedDB"),
+	passport = require("passport"),
+	localStrategy = require("passport-local"),
+	User = require("./models/users");
 
 
 mongoose.connect("mongodb://localhost/yelp_camp");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// seedDB
 // seedDB();
+
+// PASSPORT CONFIG
+app.use(require("express-session")({
+	secret: "random text to make the passport stronger and harder to guess",
+	resave: false,
+	saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 
 // redirect to index page
 app.get("/", function(req, res) {
@@ -21,7 +37,7 @@ app.get("/", function(req, res) {
 	res.redirect("/campgrounds");
 });
 
-// index page
+// GET /campgrounds
 app.get("/campgrounds", function(req, res) {
 	// find campgrounds from DB
 	Campground.find({}, (err, campgrounds) => {
@@ -30,13 +46,12 @@ app.get("/campgrounds", function(req, res) {
 	});
 });
 
-// get the form for new campground
+// GET FORM /campgrounds/new
 app.get("/campgrounds/new", function(req, res) {
 	res.render("campgrounds/new");
 });
 
-
-// post route that create new campground and redirect to index page
+// POST create new campground and redirect to index page
 app.post("/campgrounds", function(req, res) {
 	//get data from form and add to campgrounds DB
 	let name = req.body.name;
@@ -52,7 +67,7 @@ app.post("/campgrounds", function(req, res) {
 });
 
 
-// show a spesific campground
+// GET get spesific campground
 app.get("/campgrounds/:id", function(req, res) {
 	Campground.findById(req.params.id)
 		.populate("comments")
@@ -88,6 +103,27 @@ app.post("/campgrounds/:id/comments", function(req, res) {
 			campground.comments.push(comment);
 			campground.save();
 			res.redirect(`/campgrounds/${req.params.id}`);
+		});
+	});
+});
+
+
+// =====================
+//  Auth Routes
+// =====================
+
+app.get("/register", function(req, res) {
+	res.render("auth/register");
+});
+
+app.post("/register", function(req, res) {
+	const newUser = new User({ username: req.body.username, email: req.body.email });
+
+	User.register(newUser, req.body.password, function(err, user) {
+		if (err) return console.log(err) || res.render("auth/register");
+
+		passport.authenticate("local")(req, res, function() {
+			res.redirect("/campgrounds");
 		});
 	});
 });
