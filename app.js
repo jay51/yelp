@@ -29,8 +29,10 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-
+app.use(function(req, res, next) {
+	res.locals.currentUser = req.user;
+	next();
+});
 // redirect to index page
 app.get("/", function(req, res) {
 	console.log("redirect To campgrounds");
@@ -79,13 +81,11 @@ app.get("/campgrounds/:id", function(req, res) {
 });
 
 
-
 // =====================
 // COMMENTS ROUTES
 // =====================
-
-
-app.get("/campgrounds/:id/comments/new", function(req, res) {
+// GET /campgrounds/camp/commments/new
+app.get("/campgrounds/:id/comments/new", isLoggedIn, function(req, res) {
 	Campground.findById(req.params.id, (err, campground) => {
 		if (err) return err;
 		res.render("comments/new", { campground });
@@ -93,7 +93,7 @@ app.get("/campgrounds/:id/comments/new", function(req, res) {
 });
 
 
-app.post("/campgrounds/:id/comments", function(req, res) {
+app.post("/campgrounds/:id/comments", isLoggedIn, function(req, res) {
 	// find campground
 	Campground.findById(req.params.id, (err, campground) => {
 		if (err) return err; // need to handle err better
@@ -112,10 +112,11 @@ app.post("/campgrounds/:id/comments", function(req, res) {
 //  Auth Routes
 // =====================
 
+// GET /register
 app.get("/register", function(req, res) {
 	res.render("auth/register");
 });
-
+// POST /register
 app.post("/register", function(req, res) {
 	const newUser = new User({ username: req.body.username, email: req.body.email });
 
@@ -129,6 +130,32 @@ app.post("/register", function(req, res) {
 });
 
 
+// GET /login
+app.get("/login", function(req, res) {
+	res.render("auth/login");
+});
+
+// POST /login
+app.post("/login", passport.authenticate("local", {
+	successRedirect: "/campgrounds",
+	failureRedirect: "/login"
+}), function(req, res) {
+
+});
+
+// GET /logout
+app.get("/logout", function(req, res) {
+	req.logout();
+	res.redirect("/campgrounds");
+});
+
+
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	return res.redirect("/login");
+}
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
