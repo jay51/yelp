@@ -14,18 +14,19 @@
         </div>
         <!--campground-->
         <div class="col-md-9">
-            <div class="thumbnail"> 
+            <div class="thumbnail">
                 <img class="img-responsive" src="<%= foundCampground.image %>">
                 <div class="caption">
                     <h4 class="pull-right"> 9.00/night</h4>
                     <h4> <a><%= foundCampground.name %></a> </h4>
                     <hr/>
                     <div> <%= foundCampground.description %> </div>
+                    <p class="bg-dark p-2 d-inline"><a class="text-white" href="#"> <%=foundCampground.author.username %></a></p>
                 </div>
             </div>
             <div class="well">
                 <div class="text-right">
-                    <a href="/campgrounds/<%= foundCampground._id %>/comments/new" class="btn">New Comment</a> 
+                    <a href="/campgrounds/<%= foundCampground._id %>/comments/new" class="btn">New Comment</a>
                     <hr/>
                 </div>
                 <!--comments-->
@@ -40,13 +41,13 @@
                         </div>
                         <hr/>
                     <% });%>
-                    
+
                 </div>
 
             </div>
-           
+
         </div>
-        
+
     </div>
 </div>
 
