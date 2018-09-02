@@ -18,10 +18,11 @@
                 <img class="img-responsive" src="<%= foundCampground.image %>">
                 <div class="caption">
                     <h4 class="pull-right"> 9.00/night</h4>
-                    <h4> <a><%= foundCampground.name %></a> </h4>
-                    <hr/>
+                    <h4><a class="text-info" href="#"><%= foundCampground.name %></a> </h4>
                     <div> <%= foundCampground.description %> </div>
+                    <hr/>
                     <p class="bg-dark p-2 d-inline"><a class="text-white" href="#"> <%=foundCampground.author.username %></a></p>
+                    <a class="btn btn-warning" href="/campgrounds/<%=foundCampground._id%>/edit" >Edit</a>
                 </div>
             </div>
             <div class="well">

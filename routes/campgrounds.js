@@ -22,16 +22,40 @@ router.post("/", mid.isLoggedIn, function(req, res) {
     //get data from form and add to campgrounds DB
     let name = req.body.name;
     let image = req.body.image;
+    let description = req.body.description;
     let author = { username: req.user.username, id: req.user._id };
     // add campground to DB
     Campground.create({
         name,
         image,
+        description,
         author
     }, (err, camp) => console.log(err ? err : camp));
 
     //redirect back to index page
     res.redirect("/campgrounds");
+});
+
+
+// GET EDIT CAMPGROUND
+router.get("/:id/edit", function(req, res) {
+    // find campground to update
+    Campground.findById(req.params.id, function(err, foundCampground) {
+        if (err) return res.redirect("/campgrounds");
+        console.log(foundCampground);
+        res.render("campgrounds/edit", { foundCampground });
+    });
+
+});
+
+
+// PUT UPDATE CAMPGROUND
+router.put("/:id", function(req, res) {
+    Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground) {
+        if (err) return res.redirect("/campgrounds");
+
+        res.redirect(`/campgrounds/${req.params.id}`);
+    });
 });
 
 
