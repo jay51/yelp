@@ -58,6 +58,15 @@ router.put("/:id", function(req, res) {
     });
 });
 
+// DELETE DESTORY CAMPGROUND
+router.delete("/:id", function(req, res) {
+    Campground.findByIdAndRemove(req.params.id, function(err) {
+        if (err) return console.log(err) || res.redirect("/campgrounds");
+
+        return res.redirect("/campgrounds");
+    })
+});
+
 
 // GET get spesific campground
 router.get("/:id", function(req, res) {

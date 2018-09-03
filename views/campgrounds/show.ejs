@@ -22,7 +22,10 @@
                     <div> <%= foundCampground.description %> </div>
                     <hr/>
                     <p class="bg-dark p-2 d-inline"><a class="text-white" href="#"> <%=foundCampground.author.username %></a></p>
-                    <a class="btn btn-warning" href="/campgrounds/<%=foundCampground._id%>/edit" >Edit</a>
+                    <a class="btn btn-sm btn-warning" href="/campgrounds/<%=foundCampground._id%>/edit">Edit</a>
+                    <form class="d-inline" action="/campgrounds/<%=foundCampground._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger btn-sm" >Delete</button>
+                    </form>
                 </div>
             </div>
             <div class="well">
