@@ -38,7 +38,7 @@ router.post("/", mid.isLoggedIn, function(req, res) {
 
 
 // GET EDIT CAMPGROUND
-router.get("/:id/edit", function(req, res) {
+router.get("/:id/edit", mid.checkCampgroundOwnerShip, function(req, res) {
     // find campground to update
     Campground.findById(req.params.id, function(err, foundCampground) {
         if (err) return res.redirect("/campgrounds");
@@ -50,7 +50,7 @@ router.get("/:id/edit", function(req, res) {
 
 
 // PUT UPDATE CAMPGROUND
-router.put("/:id", function(req, res) {
+router.put("/:id", mid.checkCampgroundOwnerShip, function(req, res) {
     Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground) {
         if (err) return res.redirect("/campgrounds");
 
@@ -59,7 +59,7 @@ router.put("/:id", function(req, res) {
 });
 
 // DELETE DESTORY CAMPGROUND
-router.delete("/:id", function(req, res) {
+router.delete("/:id", mid.checkCampgroundOwnerShip, function(req, res) {
     Campground.findByIdAndRemove(req.params.id, function(err) {
         if (err) return console.log(err) || res.redirect("/campgrounds");
 
