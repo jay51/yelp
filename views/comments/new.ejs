@@ -2,20 +2,21 @@
 
 <div class="container">
 	<form action="/campgrounds/<%= campground._id%>/comments" method="post">
-	  <div class="form-group">
-	    <label for="name">Author name</label>
-	    <input type="text" class="form-control" name="comments[author]" id="name"  placeholder="Author">
-	    <small  class="form-text text-muted">Share your campgrounds with us.</small>
-	  </div>
-	  
+
+	  <!--<div class="form-group">-->
+	  <!--  <label for="name">Author name</label>-->
+	  <!--  <input type="text" class="form-control" name="comments[author]" id="name"  placeholder="Author">-->
+	  <!--  <small  class="form-text text-muted">Share your campgrounds with us.</small>-->
+	  <!--</div>-->
+
 	  <div class="form-group">
 	  	<label for="description">Description</label>
-    	<textarea class="form-control" id="description" name="comments[text]" rows="3"></textarea>
+    	<textarea class="form-control" id="description" name="comment[text]" rows="3"></textarea>
       </div>
-	 
+
 	  <button type="submit" class="btn btn-primary">Submit</button>
 	</form>
-	
+
 	<a href="/campgrounds">Go Back</a>
 
 </div>
