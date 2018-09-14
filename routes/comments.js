@@ -33,8 +33,8 @@ router.post("/", mid.isLoggedIn, function(req, res) {
     });
 });
 
-
-router.get("/:comment_id/edit", function(req, res) {
+// GET edit form
+router.get("/:comment_id/edit", mid.checkCommentOwnerShip, function(req, res) {
 
     Comment.findById(req.params.comment_id, function(err, foundComment) {
         if (err) return res.redirect("/campgrounds");
@@ -46,7 +46,7 @@ router.get("/:comment_id/edit", function(req, res) {
 
 
 // POST /comment_id edit comments
-router.put("/:comment_id", function(req, res) {
+router.put("/:comment_id", mid.checkCommentOwnerShip, function(req, res) {
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, req.body.comment,
         function(err, comment) {
             if (err) return res.redirect("back");
@@ -56,6 +56,15 @@ router.put("/:comment_id", function(req, res) {
         });
 });
 
+
+router.delete("/:comment_id", mid.checkCommentOwnerShip, function(req, res) {
+    Comment.findByIdAndRemove(req.params.comment_id, function(err) {
+        if (err) return res.redirect("back");
+        else {
+            res.redirect(`/campgrounds/${req.params.id}`);
+        }
+    })
+});
 
 
 module.exports = router;
