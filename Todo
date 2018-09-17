@@ -1,6 +1,5 @@
 add user authntication.
 Add map to show campground location
-add comments to show route 
 
 
 
@@ -16,7 +15,7 @@ NEW         /dogs/new   GET         DISPLAY FORM FOR NEW DOGS
 
 CREATE      /dogs       POST        ADD DOG TO DB
 
-SHOW        /dogs       GET         SHOW INFO ABOUT ONE DOG
+SHOW        /dogs/1     GET         SHOW INFO ABOUT ONE DOG
 
 
 =============================================================
