@@ -22,6 +22,7 @@ router.post("/", mid.isLoggedIn, function(req, res) {
 	//get data from form and add to campgrounds DB
 	let name = req.body.name;
 	let image = req.body.image;
+	let price = req.body.price;
 	let description = req.body.description;
 	let author = { username: req.user.username, id: req.user._id };
 	// add campground to DB
@@ -29,6 +30,7 @@ router.post("/", mid.isLoggedIn, function(req, res) {
 		{
 			name,
 			image,
+			price,
 			description,
 			author
 		},

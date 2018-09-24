@@ -49,9 +49,9 @@ app.use(function(req, res, next) {
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes); // the string in front will be appended to all campgroundRoutes
 app.use("/", indexRoutes);
-// app.get("/", function(req, res) {
-// 	res.send("<h1> root page</h1>");
-// });
+app.get("/", function(req, res) {
+	res.render("partials/landing");
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

@@ -17,45 +17,53 @@
             <div class="thumbnail">
                 <img class="img-responsive" src="<%= foundCampground.image %>">
                 <div class="caption">
-                    <h4 class="pull-right"> 9.00/night</h4>
-                    <h4><a class="text-info" href="#"><%= foundCampground.name %></a> </h4>
-                    <div> <%= foundCampground.description %> </div>
-                    <hr/>
-                    <p class="bg-dark p-2 d-inline"><a class="text-white" href="#"> <%=foundCampground.author.username %></a></p>
+                    <h4 class="float-right">
+                        <%= foundCampground.price%>/night</h4>
+                    <h4><a class="text-info" href="#">
+                            <%= foundCampground.name %></a> </h4>
+                    <div>
+                        <%= foundCampground.description %>
+                    </div>
+                    <hr />
+                    <p class="bg-dark p-2 d-inline"><a class="text-white" href="#">
+                            <%=foundCampground.author.username %></a></p>
                     <%if(currentUser && foundCampground.author.id.equals(currentUser._id)) { %>
-                        <a class="btn btn-sm btn-warning" href="/campgrounds/<%=foundCampground._id%>/edit">Edit</a>
-                        <form class="d-inline" action="/campgrounds/<%=foundCampground._id%>?_method=DELETE" method="POST">
-                            <button class="btn btn-danger btn-sm" >Delete</button>
-                        </form>
+                    <a class="btn btn-sm btn-warning" href="/campgrounds/<%=foundCampground._id%>/edit">Edit</a>
+                    <form class="d-inline" action="/campgrounds/<%=foundCampground._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
                     <% } %>
                 </div>
             </div>
             <div class="well">
                 <div class="text-right">
                     <a href="/campgrounds/<%= foundCampground._id %>/comments/new" class="btn">New Comment</a>
-                    <hr/>
+                    <hr />
                 </div>
                 <!--comments-->
                 <div>
                     <% foundCampground.comments.forEach( ( comment ) => { %>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong> <%= comment.author.username %> </strong>
-                                <span class="pull-right"> 10 days ago </span>
-                                <p> <%= comment.text %> </p>
-                                <%if(currentUser && comment.author.id.equals(currentUser._id)) { %>
-                                    <a class="btn btn-warning"
-                                        href="/campgrounds/<%=foundCampground._id%>/comments/<%=comment._id%>/edit">
-                                        Edit
-                                    </a>
-                                    <form class="d-inline" action="/campgrounds/<%=foundCampground._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                                        <input type="submit" class="btn btn-danger" value="delete" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong>
+                                <%= comment.author.username %> </strong>
+                            <span class="pull-right"> 10 days ago </span>
+                            <p>
+                                <%= comment.text %>
+                            </p>
+                            <%if(currentUser && comment.author.id.equals(currentUser._id)) { %>
+                            <a class="btn btn-warning" href="/campgrounds/<%=foundCampground._id%>/comments/<%=comment._id%>/edit">
+                                Edit
+                            </a>
+                            <form class="d-inline" action="/campgrounds/<%=foundCampground._id%>/comments/<%=comment._id%>?_method=DELETE"
+                                method="POST">
+                                <input type="submit" class="btn btn-danger" value="delete" />
 
-                                    </from>
+                                </from>
                                 <% }%>
-                            </div>
                         </div>
-                        <hr/>
+                    </div>
+                    <hr />
                     <% });%>
 
                 </div>

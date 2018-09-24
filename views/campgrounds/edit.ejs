@@ -2,20 +2,29 @@
 
 <div class="container">
 	<form action="/campgrounds/<%=foundCampground._id%>?_method=PUT" method="post">
-	  <div class="form-group">
-	    <label for="name">Campground name</label>
-	    <input type="text" class="form-control" name="name" id="campground[name]"  value= "<%=foundCampground.name%>" />
-	    <small  class="form-text text-muted">Share your campgrounds with US.</small>
-	  </div>
-	  <div class="form-group">
-	    <label for="image">Image URL</label>
-	    <input type="text" class="form-control" name="campground[image]" id="url" value="<%=foundCampground.image%>" required>
-	  </div>
-	  <div class="form-group">
-	  	<label for="description">Description</label>
-    	<textarea class="form-control" id="description" name="campground[description]" rows="3"><%=foundCampground.description%></textarea>
-      </div>
-	  <button type="submit" class="btn btn-primary">Submit</button>
+		<div class="form-group">
+			<label for="name">Campground name</label>
+			<input type="text" class="form-control" name="campground[name]" id="name" value="<%=foundCampground.name%>" />
+			<small class="form-text text-muted">Share your campgrounds with US.</small>
+		</div>
+
+		<div class="form-group">
+			<label for="price">Price</label>
+			<input type="number" class="form-control" name="campground[price]" id="price" value="<%=foundCampground.price%>" min="0.01"
+			 step="0.01">
+			<small class="form-text text-muted">Share your campgrounds with US.</small>
+		</div>
+
+		<div class="form-group">
+			<label for="image">Image URL</label>
+			<input type="text" class="form-control" name="campground[image]" id="url" value="<%=foundCampground.image%>"
+			 required>
+		</div>
+		<div class="form-group">
+			<label for="description">Description</label>
+			<textarea class="form-control" id="description" name="campground[description]" rows="3"><%=foundCampground.description%></textarea>
+		</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
 	</form>
 
 	<a href="/campgrounds">Go Back</a>
