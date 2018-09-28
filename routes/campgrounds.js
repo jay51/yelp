@@ -73,7 +73,10 @@ router.get("/:id", function(req, res) {
     Campground.findById(req.params.id)
         .populate("comments")
         .exec((err, foundCampground) => {
-            if (err) return err;
+            if (err || !foundCampground) {
+                console.log(req.get('Referrer'));
+                return res.redirect("..");
+            }
             res.render("campgrounds/show", { foundCampground });
         });
 });
