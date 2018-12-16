@@ -2,7 +2,6 @@ const express = require("express"),
 	bodyParser = require("body-parser"),
 	mongoose = require("mongoose"),
 	app = express(),
-	seedDB = require("./seedDB"), // remove this later
 	flash = require("connect-flash"),
 	passport = require("passport"),
 	localStrategy = require("passport-local"),
@@ -20,7 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.disable("x-powered-by");
 app.use(methodOverride("_method"));
 app.use(flash());
-// seedDB();
 
 // PASSPORT CONFIG
 app.use(
@@ -47,11 +45,12 @@ app.use(function(req, res, next) {
 
 // ROUTES WILL FOWLL UNDER HERE!
 app.use("/campgrounds/:id/comments", commentRoutes);
-app.use("/campgrounds", campgroundRoutes); // the string in front will be appended to all campgroundRoutes
+app.use("/campgrounds", campgroundRoutes); // string in front will be appended to all campgroundRoutes
 app.use("/", indexRoutes);
-app.get("/", function(req, res) {
-	res.render("partials/landing");
-});
+
+// app.get("/", function(req, res) {
+// 	res.render("partials/landing");
+// });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
