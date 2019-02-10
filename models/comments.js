@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const commentsSchema = mongoose.Schema({
+	// text is the comment content
 	text: String,
 	author: {
 		id: {
